@@ -36,15 +36,6 @@ const getUserById = asyncHandler(async (req, res) => {
 // @access  Public
 const authUser = asyncHandler(async (req, res) => {
 
-  const errors = validationResult(req);
-
-  if(!errors.isEmpty()) {
-    res.status(400).json({
-      errors : errors.mapped()
-    })
-    //throw new Error( JSON.stringify(errors.mapped()))
-  }
-
   const { email, password } = req.body
 
   const user = await User.findOne({ email })
@@ -55,7 +46,7 @@ const authUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: generateToken(user._id),
+      token: await generateToken(user._id),
     })
   } else {
     res.status(401)
@@ -88,7 +79,7 @@ const registerUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: generateToken(user._id),
+      token: await generateToken(user._id),
     })
   } else {
     res.status(400)
@@ -135,7 +126,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
-      token: generateToken(updatedUser._id),
+      token: await generateToken(updatedUser._id),
     })
   } else {
     res.status(404)
