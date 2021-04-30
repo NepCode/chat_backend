@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler'
 import generateToken from '../utils/generateToken.js'
 import User from '../models/userModel.js'
+import { validationResult } from 'express-validator'
 
 // @desc    Get all users
 // @route   GET /api/v1/users
@@ -34,6 +35,16 @@ const getUserById = asyncHandler(async (req, res) => {
 // @route   POST /api/v1/users/login
 // @access  Public
 const authUser = asyncHandler(async (req, res) => {
+
+  const errors = validationResult(req);
+
+  if(!errors.isEmpty()) {
+    res.status(400).json({
+      errors : errors.mapped()
+    })
+    //throw new Error( JSON.stringify(errors.mapped()))
+  }
+
   const { email, password } = req.body
 
   const user = await User.findOne({ email })
