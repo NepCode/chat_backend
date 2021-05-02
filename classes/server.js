@@ -8,6 +8,7 @@ import dotenv from 'dotenv'
 import connectDB from '../config/db.js'
 
 import userRoutes from '../routes/userRoutes.js'
+import messageRoutes from '../routes/messageRoutes.js'
 import { errorHandler, notFound } from '../middleware/errorMiddleware.js'
 
 
@@ -32,6 +33,7 @@ class Server {
         this.app.use(express.json());
         
         this.app.use( '/api/v1/users', userRoutes );
+        this.app.use( '/api/v1/messages', messageRoutes );
 
         this.app.use(notFound);
         this.app.use(errorHandler);

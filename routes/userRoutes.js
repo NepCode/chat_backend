@@ -1,7 +1,8 @@
 import express from 'express'
 import { check } from 'express-validator'
 import { validateInputFields } from '../middleware/validateInputFields.js'
-import { protect, admin } from '../middleware/authMiddleware.js'
+import { protect, admin
+ } from '../middleware/authMiddleware.js'
 
 
 const router = express.Router()
@@ -14,6 +15,7 @@ import {
   deleteUser,
   getUserById,
   updateUser,
+  refreshToken
 } from '../controllers/userController.js'
 
 router.route('/').post(registerUser, [
@@ -28,6 +30,8 @@ router.post('/login', [
         validateInputFields
       ],
     authUser)
+
+router.route('/refreshToken').get( protect, refreshToken)
     
 router
   .route('/profile')

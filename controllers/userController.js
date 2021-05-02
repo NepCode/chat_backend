@@ -54,6 +54,21 @@ const authUser = asyncHandler(async (req, res) => {
   }
 })
 
+// @desc    Auth user & get token
+// @route   GET /api/v1/users/refreshToken
+// @access  Public
+const refreshToken = asyncHandler(async (req, res) => {
+  const user = req.user
+  res.json({
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    isAdmin: user.isAdmin,
+    token: await generateToken(user._id)
+  })
+ 
+})
+
 // @desc    Register a new user
 // @route   POST /api/v1/users
 // @access  Public
@@ -183,4 +198,5 @@ export {
   deleteUser,
   getUserById,
   updateUser,
+  refreshToken
 }
