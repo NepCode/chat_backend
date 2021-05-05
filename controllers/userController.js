@@ -1,7 +1,6 @@
 import asyncHandler from 'express-async-handler'
 import generateToken from '../utils/generateToken.js'
 import User from '../models/userModel.js'
-import { validationResult } from 'express-validator'
 
 // @desc    Get all users
 // @route   GET /api/v1/users
@@ -42,6 +41,7 @@ const authUser = asyncHandler(async (req, res) => {
 
   if (user && (await user.matchPassword(password))) {
     res.json({
+      ok : true,
       _id: user._id,
       name: user.name,
       email: user.email,
@@ -90,6 +90,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   if (user) {
     res.status(201).json({
+      ok : true,
       _id: user._id,
       name: user.name,
       email: user.email,
