@@ -60,6 +60,7 @@ const authUser = asyncHandler(async (req, res) => {
 const refreshToken = asyncHandler(async (req, res) => {
   const user = req.user
   res.json({
+    ok: true,
     _id: user._id,
     name: user.name,
     email: user.email,
