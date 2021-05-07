@@ -39,4 +39,17 @@ const admin = (req, res, next) => {
   }
 }
 
-export { protect, admin }
+const checkJWT = ( token = '' ) => {
+
+  try {
+    token = token.split(' ')[1]
+    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    return [ true, decoded.id ];
+
+  } catch (error) {
+      return [ false, null ];
+  }
+
+}
+
+export { protect, admin, checkJWT }
