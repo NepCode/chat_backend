@@ -7,7 +7,7 @@ import User from '../models/userModel.js'
 const userConnected = asyncHandler(async (id) => {
 
     const user = await User.findById(id);
-    user.online = true;
+    user.status = true;
     await user.save();
     
     return user;
@@ -15,7 +15,7 @@ const userConnected = asyncHandler(async (id) => {
 
 const userDisconnected = asyncHandler( async (id ) => {
     const user = await User.findById(id);
-    user.online = false;
+    user.status = false;
     await user.save();
     
     return user;
