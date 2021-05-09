@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler'
 import User from '../models/userModel.js'
+import Message from '../models/messageModel.js'
 
 // @desc    Get user connected from some user chat
 // @route   GET /api/v1/{from}/messages
@@ -30,9 +31,18 @@ const getUsers = asyncHandler( async () => {
 
 })
 
+const saveMessage = asyncHandler( async (payload) => {
+
+   const message = new Message( payload )
+   await message.save();
+   return message
+
+})
+
 
 export {
     userConnected,
     userDisconnected,
-    getUsers
+    getUsers,
+    saveMessage
 }

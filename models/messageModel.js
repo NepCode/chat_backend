@@ -23,7 +23,7 @@ const messageSchema = mongoose.Schema(
 )
 
 messageSchema.method('toJSON', function() {
-  const { __v, ...object } = this.toObject();
+  const { __v, _id, ...object } = this.toObject();
   object.uid = _id;
   return object;
 })

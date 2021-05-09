@@ -1,4 +1,4 @@
-import { userConnected, userDisconnected, getUsers } from '../controllers/socketController.js';
+import { userConnected, userDisconnected, getUsers, saveMessage } from '../controllers/socketController.js';
 import { checkJWT } from '../middleware/authMiddleware.js'
 
 class Sockets {
@@ -34,8 +34,10 @@ class Sockets {
             
 
             // TODO: listen when some user sends a message , private message 
-            socket.on('private-message', ( payload ) => {
-                console.log(payload)
+            socket.on('private-message', async ( payload ) => {
+                const message = await saveMessage( payload );
+                this.io.to( payload.to ).emit('private-message', message);
+                this.io.to( payload.from ).emit('private-message', message);
             })
 
 
