@@ -14,9 +14,6 @@ class Sockets {
 
         this.io.on('connection', async ( socket ) => {
 
-            // TODO: socket join, id 
-            // TODO: listen when user sends a message , private message 
-            // TODO: disconnect user and update in db 
             // TODO: emit all connected users
             
             // TODO: validate JWT if not valid disconnect client 
@@ -30,7 +27,19 @@ class Sockets {
             // TODO: check online status through id 
             console.log('Client connected', id);
             await userConnected(id);
+
+
+            // TODO: socket join, id 
+            socket.join(id);
             
+
+            // TODO: listen when some user sends a message , private message 
+            socket.on('private-message', ( payload ) => {
+                console.log(payload)
+            })
+
+
+            // TODO: disconnect user and update status in db 
             socket.on('disconnect', async  () => {
                 console.log('client disconnected', id)
                 await userDisconnected(id);
