@@ -21,8 +21,18 @@ const userDisconnected = asyncHandler( async (id ) => {
     return user;
 })
 
+const getUsers = asyncHandler( async () => {
+
+    const users = await User
+            .find()
+            .sort('-status');
+    return users;
+
+})
+
 
 export {
     userConnected,
-    userDisconnected
+    userDisconnected,
+    getUsers
 }
